@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,20 +77,33 @@
       text-align: center;
       margin-top: 3rem;
     }
-    .cta a {
-      display: inline-block;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    input[type="email"] {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 300px;
+    }
+    button {
       padding: 1rem 2rem;
-      background: #2563eb;
+      background-color: #2563eb;
       color: white;
-      text-decoration: none;
+      border: none;
       border-radius: 0.75rem;
       font-weight: bold;
       font-size: 1.125rem;
       box-shadow: 0 5px 10px rgba(37, 99, 235, 0.3);
       transition: background 0.3s ease;
+      cursor: pointer;
     }
-    .cta a:hover {
-      background: #1d4ed8;
+    button:hover {
+      background-color: #1d4ed8;
     }
     footer {
       background-color: #f1f5f9;
@@ -134,7 +146,10 @@
     </div>
 
     <div class="cta">
-      <a href="#">Join the Beta Waitlist</a>
+      <form name="waitlist" method="POST" data-netlify="true">
+        <input type="email" name="email" placeholder="Enter your email to join the beta waitlist" required>
+        <button type="submit">Join the Beta Waitlist</button>
+      </form>
     </div>
   </section>
 
