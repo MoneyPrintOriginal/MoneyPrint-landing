@@ -25,6 +25,11 @@ With global advancements in AI, cloud identity systems, and increasing demand fo
 
 Visit the landing page:  
 👉 [https://moneyprint.netlify.app/](https://moneyprint.netlify.app/)
+## 🚀 Live Demo
+
+Try the live demo here: [https://0cc3a0f9-f027-4779-9155-7ca6ecad84a3-00-g2e1djno8s47.picard.replit.dev](https://0cc3a0f9-f027-4779-9155-7ca6ecad84a3-00-g2e1djno8s47.picard.replit.dev)
+
+Note: This is an early prototype showing how MoneyPrint could enable fingerprint-based transactions. Full biometric integration is under development.
 
 ## 🧰 Tech Stack (Planned & Ongoing)
 
