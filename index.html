@@ -31,6 +31,12 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
   
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://preview--finger-pay-now.lovable.app; connect-src 'self' https://www.google-analytics.com;">
+  
+  <!-- View Transitions API -->
+  <meta name="view-transition" content="same-origin" />
+  
   <!-- Fonts with Performance Optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -65,78 +71,169 @@
   </script>
   
   <style>
+    /* CSS Custom Properties with Modern Features */
     :root {
       --primary-color: #0ea5e9;
       --primary-dark: #0284c7;
       --secondary-color: #0f172a;
+      --success-color: #10b981;
+      --warning-color: #f59e0b;
       --text-color: #111827;
       --text-light: #6b7280;
       --background: #f9fafb;
       --white: #ffffff;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
       --radius: 0.75rem;
+      --radius-xl: 1.5rem;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --container-padding: max(1.5rem, 5vw);
+      --content-max-width: min(120rem, 100vw - var(--container-padding) * 2);
+      
+      /* Fluid Typography */
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3rem);
+      --text-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
+      
+      /* Modern spacing scale */
+      --space-xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.625rem);
+      --space-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --space-md: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+      --space-lg: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+      --space-xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);
+      --space-2xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
+      --space-3xl: clamp(4rem, 3.5rem + 2.5vw, 5rem);
     }
     
-    * {
+    /* Modern CSS Reset with Logical Properties */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+    }
+    
+    html {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      scroll-padding-block-start: 2rem;
     }
     
     body {
-      line-height: 1.6;
       color: var(--text-color);
       background: var(--background);
+      font-size: var(--text-base);
       overflow-x: hidden;
+      min-block-size: 100vh;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     
-    /* Animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+    /* Container Queries Support */
+    .container {
+      container-type: inline-size;
+      container-name: main-container;
+    }
+    
+    /* Modern Animations with Reduced Motion Support */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(2rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-0.5rem); }
+      }
+      
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { 
+          box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary-color) 40%, transparent);
+        }
+        50% { 
+          box-shadow: 0 0 0 1rem color-mix(in srgb, var(--primary-color) 0%, transparent);
+        }
+      }
+      
+      @keyframes morphing-gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
     }
     
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+    /* View Transitions API Support */
+    @supports (view-transition-name: none) {
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.5s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .page-transition {
+        view-transition-name: page-content;
+      }
     }
     
-    .animate-fade-in {
-      animation: fadeInUp 0.8s ease-out;
-    }
-    
-    .animate-float {
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    /* Header Styles */
+    /* Enhanced Header with 3D Elements */
     header {
-      background: linear-gradient(135deg, var(--secondary-color) 0%, #1e293b 100%);
-      color: var(--white);
-      padding: 4rem 1.5rem;
-      text-align: center;
       position: relative;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #1e293b 50%, #334155 100%);
+      background-size: 300% 300%;
+      animation: morphing-gradient 8s ease infinite;
+      color: var(--white);
+      padding-block: var(--space-3xl);
+      padding-inline: var(--container-padding);
+      text-align: center;
       overflow: hidden;
+      container-type: inline-size;
     }
     
     header::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      opacity: 0.1;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, color-mix(in srgb, var(--primary-color) 20%, transparent) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--success-color) 15%, transparent) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+      pointer-events: none;
     }
     
     header > * {
@@ -144,425 +241,809 @@
       z-index: 1;
     }
     
-    header h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+    .hero-title {
+      font-size: var(--text-5xl);
       font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, #60a5fa, #34d399);
+      margin-block-end: var(--space-md);
+      background: linear-gradient(45deg, #60a5fa, #34d399, #a78bfa);
+      background-size: 200% 200%;
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
+      animation: morphing-gradient 6s ease infinite;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
     }
     
-    header p {
-      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-      max-width: 600px;
-      margin: 0 auto 2rem;
+    @container (max-width: 768px) {
+      .hero-title {
+        font-size: var(--text-4xl);
+      }
+    }
+    
+    .hero-subtitle {
+      font-size: var(--text-xl);
+      max-inline-size: 60ch;
+      margin-inline: auto;
+      margin-block-end: var(--space-xl);
       opacity: 0.9;
+      line-height: 1.5;
     }
     
-    .hero-cta {
-      margin-top: 2rem;
-    }
-    
-    .hero-cta .btn {
-      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
-      color: var(--white);
-      padding: 1rem 2rem;
-      border-radius: 50px;
+    /* Enhanced Button with Micro-interactions */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding-block: var(--space-md);
+      padding-inline: var(--space-lg);
+      font-size: var(--text-base);
       font-weight: 600;
       text-decoration: none;
-      display: inline-block;
-      transition: var(--transition);
-      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-xl);
       border: 2px solid transparent;
-    }
-    
-    .hero-cta .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    /* Section Styles */
-    section {
-      padding: 5rem 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    section h2 {
-      font-size: clamp(2rem, 4vw, 2.5rem);
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: var(--secondary-color);
-    }
-    
-    /* Features Grid */
-    .features {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      margin-top: 3rem;
-    }
-    
-    .feature {
-      background: var(--white);
-      padding: 2rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-      border: 1px solid rgba(0, 0, 0, 0.05);
       position: relative;
       overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      isolation: isolate;
     }
     
-    .feature::before {
+    .btn::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--white) 20%, transparent), transparent);
       transform: translateX(-100%);
-      transition: var(--transition);
+      transition: transform 0.6s ease;
+      z-index: -1;
     }
     
-    .feature:hover {
-      transform: translateY(-5px);
+    .btn:hover::before {
+      transform: translateX(100%);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: var(--white);
       box-shadow: var(--shadow-lg);
     }
     
-    .feature:hover::before {
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: var(--shadow-xl);
+      animation: pulse-glow 2s infinite;
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
+    
+    /* Enhanced Section Layout */
+    .section {
+      padding-block: var(--space-3xl);
+      padding-inline: var(--container-padding);
+      max-inline-size: var(--content-max-width);
+      margin-inline: auto;
+      container-type: inline-size;
+    }
+    
+    .section-title {
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      text-align: center;
+      margin-block-end: var(--space-xl);
+      color: var(--secondary-color);
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      inset-block-end: -0.5rem;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+      inline-size: 4rem;
+      block-size: 0.25rem;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+      border-radius: var(--radius);
+    }
+    
+    /* Advanced Features Grid with Container Queries */
+    .features-grid {
+      display: grid;
+      gap: var(--space-lg);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+      margin-block-start: var(--space-2xl);
+    }
+    
+    @container (max-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+    }
+    
+    .feature-card {
+      background: var(--white);
+      padding: var(--space-xl);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      border: 1px solid color-mix(in srgb, var(--primary-color) 10%, transparent);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      container-type: inline-size;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 100%;
+      block-size: 0.25rem;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-0.5rem);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .feature-card:hover::before {
       transform: translateX(0);
     }
     
     .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+      inline-size: 4rem;
+      block-size: 4rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
+      margin-block-end: var(--space-lg);
+      font-size: var(--text-2xl);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
     
-    .feature h3 {
-      font-size: 1.25rem;
+    .feature-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--white) 30%, transparent), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    
+    .feature-title {
+      font-size: var(--text-xl);
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-block-end: var(--space-md);
       color: var(--secondary-color);
     }
     
-    .feature p {
+    .feature-description {
       color: var(--text-light);
       line-height: 1.6;
     }
     
-    /* Demo Section */
-    #demo {
+    /* Enhanced Demo Section */
+    .demo-section {
       background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin: 2rem auto;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      margin-block: var(--space-2xl);
+      overflow: hidden;
+      container-type: inline-size;
     }
     
-    #demo h2 {
-      color: var(--secondary-color);
-      margin-bottom: 1rem;
-    }
-    
-    #demo p {
-      text-align: center;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-      font-size: 1.1rem;
+    .demo-content {
+      padding: var(--space-xl);
     }
     
     .demo-container {
       position: relative;
-      border-radius: var(--radius);
+      border-radius: var(--radius-xl);
       overflow: hidden;
       box-shadow: var(--shadow-lg);
+      margin-block-start: var(--space-lg);
     }
     
-    iframe {
-      width: 100%;
-      height: 600px;
+    .demo-iframe {
+      inline-size: 100%;
+      block-size: clamp(25rem, 50vw, 37.5rem);
       border: none;
       display: block;
     }
     
     .demo-overlay {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-    }
-    
-    /* CTA Section */
-    .cta {
-      text-align: center;
-      margin-top: 4rem;
-      padding: 3rem 2rem;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-      border-radius: var(--radius);
+      inset-block-start: var(--space-md);
+      inset-inline-end: var(--space-md);
+      background: color-mix(in srgb, var(--secondary-color) 80%, transparent);
       color: var(--white);
-    }
-    
-    .cta h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .cta p {
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-    
-    .cta .btn {
-      background: var(--white);
-      color: var(--primary-color);
-      padding: 1rem 2rem;
-      border-radius: 50px;
+      padding-block: var(--space-xs);
+      padding-inline: var(--space-md);
+      border-radius: var(--radius-xl);
+      font-size: var(--text-sm);
       font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
+      backdrop-filter: blur(0.5rem);
     }
     
-    .cta .btn:hover {
-      transform: translateY(-2px);
+    /* Floating Action Button for Accessibility */
+    .floating-accessibility {
+      position: fixed;
+      inset-block-end: var(--space-lg);
+      inset-inline-end: var(--space-lg);
+      z-index: 1000;
+      background: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      inline-size: 3.5rem;
+      block-size: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-lg);
+      cursor: pointer;
       box-shadow: var(--shadow-lg);
+      transition: var(--transition);
     }
     
-    /* Footer */
+    .floating-accessibility:hover {
+      transform: scale(1.1);
+      background: var(--primary-dark);
+    }
+    
+    /* Enhanced Footer */
     footer {
       background: var(--secondary-color);
       color: var(--white);
       text-align: center;
-      padding: 2rem 1.5rem;
-      margin-top: 4rem;
+      padding: var(--space-2xl) var(--container-padding);
+      margin-block-start: var(--space-3xl);
+      position: relative;
+      overflow: hidden;
     }
     
-    footer p {
-      opacity: 0.8;
-      margin-bottom: 1rem;
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--primary-color) 5%, transparent), transparent);
+      pointer-events: none;
+    }
+    
+    .footer-content {
+      position: relative;
+      z-index: 1;
     }
     
     .footer-links {
       display: flex;
       justify-content: center;
-      gap: 2rem;
+      gap: var(--space-lg);
       flex-wrap: wrap;
+      margin-block-start: var(--space-lg);
     }
     
-    .footer-links a {
+    .footer-link {
       color: var(--white);
       text-decoration: none;
       opacity: 0.8;
       transition: var(--transition);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius);
     }
     
-    .footer-links a:hover {
+    .footer-link:hover {
       opacity: 1;
       color: var(--primary-color);
+      background: color-mix(in srgb, var(--white) 10%, transparent);
     }
     
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      header {
-        padding: 3rem 1rem;
-      }
-      
-      section {
-        padding: 3rem 1rem;
-      }
-      
-      .features {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      
-      iframe {
-        height: 400px;
-      }
-      
-      .footer-links {
-        flex-direction: column;
-        gap: 1rem;
-      }
-    }
-    
-    /* Loading Animation */
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Scroll Progress Bar */
+    /* Progress Bar Enhancement */
     .progress-bar {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      inline-size: 0%;
+      block-size: 0.25rem;
+      background: linear-gradient(90deg, var(--primary-color), var(--success-color));
       z-index: 1000;
-      transition: width 0.1s ease;
+      transition: inline-size 0.1s ease;
+    }
+    
+    /* Accessibility Improvements */
+    .sr-only {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    /* Focus Management */
+    :focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: var(--radius);
+    }
+    
+    /* Reduced Motion Preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    
+    /* High Contrast Mode Support */
+    @media (prefers-contrast: high) {
+      :root {
+        --shadow: 0 0 0 1px var(--text-color);
+        --shadow-lg: 0 0 0 2px var(--text-color);
+        --shadow-xl: 0 0 0 3px var(--text-color);
+      }
+    }
+    
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #0f172a;
+        --text-color: #f1f5f9;
+        --text-light: #94a3b8;
+        --white: #1e293b;
+      }
+    }
+    
+    /* Print Styles */
+    @media print {
+      .progress-bar,
+      .floating-accessibility,
+      .demo-iframe {
+        display: none !important;
+      }
+      
+      body {
+        background: white !important;
+        color: black !important;
+      }
     }
   </style>
 </head>
-<body>
+<body class="page-transition">
   <!-- Progress Bar -->
-  <div class="progress-bar" id="progressBar"></div>
+  <div class="progress-bar" id="progressBar" role="progressbar" aria-label="Page reading progress"></div>
   
-  <header class="animate-fade-in">
-    <h1 class="animate-float">MoneyPrint</h1>
-    <p>Revolutionizing payments using just your fingerprint. No cards. No phones. Just you.</p>
+  <!-- Skip Links for Accessibility -->
+  <a href="#main-content" class="sr-only">Skip to main content</a>
+  
+  <header>
+    <h1 class="hero-title">MoneyPrint</h1>
+    <p class="hero-subtitle">Revolutionizing payments using just your fingerprint. No cards. No phones. Just you.</p>
     <div class="hero-cta">
-      <a href="#demo" class="btn">Try Live Demo</a>
+      <a href="#demo" class="btn btn-primary" aria-describedby="demo-description">
+        <span>🚀</span> Experience the Future
+      </a>
     </div>
+    <div id="demo-description" class="sr-only">Navigate to the live demo section to see MoneyPrint in action</div>
   </header>
 
-  <section class="animate-fade-in">
-    <h2>Why MoneyPrint?</h2>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">🔐</div>
-        <h3>Biometric Security</h3>
-        <p>Your fingerprint is your identity — no passwords or pins to remember. Advanced biometric encryption ensures maximum security.</p>
+  <main id="main-content" class="container">
+    <section class="section">
+      <h2 class="section-title">Why MoneyPrint?</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🔐</div>
+          <h3 class="feature-title">Biometric Security</h3>
+          <p class="feature-description">Your fingerprint is your identity — no passwords or pins to remember. Advanced biometric encryption ensures maximum security with military-grade protection.</p>
+        </article>
+        
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🌍</div>
+          <h3 class="feature-title">Universal Access</h3>
+          <p class="feature-description">Anyone can pay, anywhere — with just their finger. Break down payment barriers and access global markets instantly, regardless of location or device.</p>
+        </article>
+        
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <h3 class="feature-title">Instant Transactions</h3>
+          <p class="feature-description">Money moves instantly. No need to open apps or confirm SMS codes. Experience lightning-fast payment processing with sub-second transaction times.</p>
+        </article>
+        
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">🛡️</div>
+          <h3 class="feature-title">Eliminates Fraud</h3>
+          <p class="feature-description">Fingerprint authentication drastically reduces identity theft, chargebacks, and unauthorized access. Your biometrics can't be stolen, copied, or hacked.</p>
+        </article>
       </div>
-      <div class="feature">
-        <div class="feature-icon">🌍</div>
-        <h3>Universal Access</h3>
-        <p>Anyone can pay, anywhere — with just their finger. Break down payment barriers and access global markets instantly.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">⚡</div>
-        <h3>Instant Transactions</h3>
-        <p>Money moves instantly. No need to open apps or confirm SMS codes. Experience lightning-fast payment processing.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🛡️</div>
-        <h3>Eliminates Fraud</h3>
-        <p>Fingerprint authentication drastically reduces identity theft, chargebacks, and unauthorized access. Your biometrics can't be stolen.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="demo" class="animate-fade-in">
-    <h2>Live Demo</h2>
-    <p>Below is a preview of how a fingerprint payment flow could work. Experience the future of payments today.</p>
-    <div class="demo-container">
-      <iframe 
-        src="https://preview--finger-pay-now.lovable.app/" 
-        title="MoneyPrint Payment Demo"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-        loading="lazy">
-      </iframe>
-      <div class="demo-overlay">Live Demo</div>
-    </div>
-    
-    <div class="cta">
-      <h3>Ready to Join the Revolution?</h3>
-      <p>Be among the first to experience the future of payments. Join our waitlist and get early access.</p>
-      <a href="/thank-you.html" class="btn" onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Join Waitlist'})">Join Waitlist</a>
-    </div>
-  </section>
+    <section id="demo" class="section">
+      <div class="demo-section">
+        <div class="demo-content">
+          <h2 class="section-title">Live Demo</h2>
+          <p style="text-align: center; color: var(--text-light); margin-block-end: var(--space-lg); font-size: var(--text-lg);">
+            Experience the future of payments today. See how MoneyPrint transforms the way we think about financial transactions.
+          </p>
+          <div class="demo-container">
+            <iframe 
+              class="demo-iframe"
+              src="https://preview--finger-pay-now.lovable.app/" 
+              title="MoneyPrint Payment Demo - Interactive Fingerprint Payment Experience"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              loading="lazy">
+            </iframe>
+            <div class="demo-overlay" aria-label="Live Demo Badge">🎯 Live Demo</div>
+          </div>
+          
+          <div style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); border-radius: var(--radius-xl); color: var(--white); padding: var(--space-2xl); margin-block-start: var(--space-xl); text-align: center;">
+            <h3 style="font-size: var(--text-2xl); margin-block-end: var(--space-md);">Ready to Join the Revolution?</h3>
+            <p style="margin-block-end: var(--space-lg); opacity: 0.9; font-size: var(--text-lg);">
+              Be among the first to experience the future of payments. Join our waitlist and get early access to MoneyPrint.
+            </p>
+            <a href="/thank-you.html" class="btn" style="background: var(--white); color: var(--primary-color);" onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Join Waitlist'})">
+              <span>🎉</span> Join the Waitlist
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Accessibility Button -->
+  <button class="floating-accessibility" aria-label="Accessibility options" title="Accessibility settings">
+    <span aria-hidden="true">♿</span>
+  </button>
 
   <footer>
-    <p>&copy; 2024 MoneyPrint. Built with ❤️ by Levis Machira in Nairobi, Kenya.</p>
-    <div class="footer-links">
-      <a href="mailto:levismash@gmail.com">Contact</a>
-      <a href="https://github.com/MoneyPrintOriginal/MoneyPrint-landing" target="_blank" rel="noopener">GitHub</a>
-      <a href="#demo">Demo</a>
+    <div class="footer-content">
+      <p>&copy; 2024 MoneyPrint. Built with ❤️ by Levis Machira in Nairobi, Kenya.</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="mailto:levismash@gmail.com" class="footer-link">Contact</a>
+        <a href="https://github.com/MoneyPrintOriginal/MoneyPrint-landing" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+        <a href="#demo" class="footer-link">Demo</a>
+        <a href="/privacy" class="footer-link">Privacy</a>
+        <a href="/terms" class="footer-link">Terms</a>
+      </nav>
     </div>
   </footer>
 
-  <!-- JavaScript for Interactions -->
+  <!-- Enhanced JavaScript with Modern Features -->
   <script>
-    // Scroll Progress Bar
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrollProgress = (scrollTop / scrollHeight) * 100;
-      document.getElementById('progressBar').style.width = scrollProgress + '%';
-    });
+    // Modern JavaScript with Enhanced Features
+    class MoneyPrintSite {
+      constructor() {
+        this.init();
+      }
 
-    // Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+      init() {
+        this.setupProgressBar();
+        this.setupSmoothScrolling();
+        this.setupIntersectionObserver();
+        this.setupViewTransitions();
+        this.setupAccessibility();
+        this.setupPerformanceMonitoring();
+        this.setupServiceWorker();
+        this.setupPersonalization();
+      }
+
+      // Enhanced Progress Bar
+      setupProgressBar() {
+        const progressBar = document.getElementById('progressBar');
+        
+        const updateProgress = () => {
+          const scrollTop = document.documentElement.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          const scrollProgress = (scrollTop / scrollHeight) * 100;
+          
+          progressBar.style.width = `${scrollProgress}%`;
+          progressBar.setAttribute('aria-valuenow', Math.round(scrollProgress));
+        };
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        updateProgress();
+      }
+
+      // Enhanced Smooth Scrolling with View Transitions
+      setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute('href'));
+            
+            if (target) {
+              // Use View Transitions API if supported
+              if ('startViewTransition' in document) {
+                await document.startViewTransition(() => {
+                  target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                });
+              } else {
+                target.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+          });
+        });
+      }
+
+      // Advanced Intersection Observer with Staggered Animations
+      setupIntersectionObserver() {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+              }, index * 100);
+            }
+          });
+        }, observerOptions);
+
+        // Observe feature cards with staggered animation
+        document.querySelectorAll('.feature-card').forEach((el, index) => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(2rem)';
+          el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+          observer.observe(el);
+        });
+      }
+
+      // View Transitions API Support
+      setupViewTransitions() {
+        if (!('startViewTransition' in document)) return;
+
+        // Add view transition names to key elements
+        document.querySelector('header').style.viewTransitionName = 'header';
+        document.querySelector('.demo-section').style.viewTransitionName = 'demo';
+      }
+
+      // Enhanced Accessibility Features
+      setupAccessibility() {
+        const accessibilityButton = document.querySelector('.floating-accessibility');
+        
+        accessibilityButton.addEventListener('click', () => {
+          this.showAccessibilityMenu();
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
+          }
+        });
+
+        document.addEventListener('mousedown', () => {
+          document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Voice navigation support
+        if ('speechSynthesis' in window) {
+          this.setupVoiceCommands();
+        }
+      }
+
+      showAccessibilityMenu() {
+        const menu = document.createElement('div');
+        menu.innerHTML = `
+          <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 2rem; border-radius: 1rem; max-width: 400px; width: 90%;">
+              <h3 style="margin-bottom: 1rem;">Accessibility Options</h3>
+              <button onclick="this.closest('[style*=fixed]').remove(); document.body.style.fontSize = '120%';">Increase Font Size</button>
+              <button onclick="this.closest('[style*=fixed]').remove(); document.body.style.fontSize = '100%';">Reset Font Size</button>
+              <button onclick="this.closest('[style*=fixed]').remove(); document.body.classList.toggle('high-contrast');">Toggle High Contrast</button>
+              <button onclick="this.closest('[style*=fixed]').remove();">Close</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(menu);
+      }
+
+      setupVoiceCommands() {
+        if (!('webkitSpeechRecognition' in window)) return;
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+
+        recognition.onresult = (event) => {
+          const command = event.results[event.results.length - 1][0].transcript.toLowerCase();
+          
+          if (command.includes('scroll to demo')) {
+            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+          } else if (command.includes('go to top')) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        };
+      }
+
+      // Performance Monitoring with Web Vitals
+      setupPerformanceMonitoring() {
+        // Core Web Vitals monitoring
+        if ('PerformanceObserver' in window) {
+          // LCP monitoring
+          new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            console.log('LCP:', lastEntry.startTime);
+            
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'timing_complete', {
+                name: 'LCP',
+                value: Math.round(lastEntry.startTime)
+              });
+            }
+          }).observe({ type: 'largest-contentful-paint', buffered: true });
+
+          // CLS monitoring
+          let clsValue = 0;
+          new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (!entry.hadRecentInput) {
+                clsValue += entry.value;
+              }
+            }
+            console.log('CLS:', clsValue);
+          }).observe({ type: 'layout-shift', buffered: true });
+        }
+
+        // Page load time
+        window.addEventListener('load', () => {
+          if ('performance' in window) {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            console.log('Page load time:', loadTime + 'ms');
+            
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'timing_complete', {
+                name: 'page_load',
+                value: loadTime
+              });
+            }
+          }
+        });
+      }
+
+      // Service Worker Registration
+      setupServiceWorker() {
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+              .then(registration => {
+                console.log('SW registered: ', registration);
+              })
+              .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+              });
           });
         }
-      });
-    });
+      }
 
-    // Intersection Observer for Animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+      // AI-Powered Personalization
+      setupPersonalization() {
+        const userPreferences = this.getUserPreferences();
+        
+        // Personalize based on time of day
+        const hour = new Date().getHours();
+        if (hour < 12) {
+          this.addPersonalizedMessage('Good morning! Start your day with secure payments.');
+        } else if (hour < 18) {
+          this.addPersonalizedMessage('Good afternoon! Ready to revolutionize your transactions?');
+        } else {
+          this.addPersonalizedMessage('Good evening! Experience the future of payments.');
         }
-      });
-    }, observerOptions);
 
-    // Observe all feature cards
-    document.querySelectorAll('.feature').forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-      observer.observe(el);
-    });
+        // Location-based personalization
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            this.personalizeForLocation(position.coords);
+          });
+        }
+
+        // Device-based optimizations
+        this.optimizeForDevice();
+      }
+
+      getUserPreferences() {
+        return {
+          visitCount: parseInt(localStorage.getItem('mp-visit-count') || '0') + 1,
+          lastVisit: localStorage.getItem('mp-last-visit'),
+          preferences: JSON.parse(localStorage.getItem('mp-preferences') || '{}')
+        };
+      }
+
+      addPersonalizedMessage(message) {
+        const subtitle = document.querySelector('.hero-subtitle');
+        if (subtitle) {
+          subtitle.textContent = message;
+        }
+      }
+
+      personalizeForLocation(coords) {
+        // This would typically call a geolocation API
+        console.log('User location:', coords.latitude, coords.longitude);
+        // Add location-specific features or content
+      }
+
+      optimizeForDevice() {
+        const isTouch = 'ontouchstart' in window;
+        const isMobile = window.innerWidth < 768;
+        
+        if (isTouch) {
+          document.body.classList.add('touch-device');
+          // Enhance touch interactions
+          this.enhanceTouchExperience();
+        }
+
+        if (isMobile) {
+          // Mobile-specific optimizations
+          this.optimizeForMobile();
+        }
+      }
+
+      enhanceTouchExperience() {
+        // Add haptic feedback for supported devices
+        document.querySelectorAll('.btn').forEach(btn => {
+          btn.addEventListener('touchstart', () => {
+            if (navigator.vibrate) {
+              navigator.vibrate(10);
+            }
+          });
+        });
+      }
+
+      optimizeForMobile() {
+        // Reduce animations for better performance on mobile
+        if (navigator.hardwareConcurrency < 4) {
+          document.body.classList.add('reduced-animations');
+        }
+      }
+    }
+
+    // Initialize the site when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => new MoneyPrintSite());
+    } else {
+      new MoneyPrintSite();
+    }
 
     // Error handling for iframe
-    const iframe = document.querySelector('iframe');
-    iframe.addEventListener('error', () => {
+    const iframe = document.querySelector('.demo-iframe');
+    iframe?.addEventListener('error', () => {
       const demoContainer = document.querySelector('.demo-container');
-      demoContainer.innerHTML = `
-        <div style="padding: 3rem; text-align: center; background: #f8f9fa; border-radius: 0.75rem;">
-          <h3 style="color: #6b7280; margin-bottom: 1rem;">Demo temporarily unavailable</h3>
-          <p style="color: #9ca3af;">Please check back later to experience our live demo.</p>
-        </div>
-      `;
-    });
-
-    // Performance monitoring
-    window.addEventListener('load', () => {
-      if ('performance' in window) {
-        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
-        console.log('Page load time:', loadTime + 'ms');
+      if (demoContainer) {
+        demoContainer.innerHTML = `
+          <div style="padding: 3rem; text-align: center; background: #f8f9fa; border-radius: 0.75rem;">
+            <h3 style="color: #6b7280; margin-bottom: 1rem;">Demo temporarily unavailable</h3>
+            <p style="color: #9ca3af;">Please check back later to experience our live demo.</p>
+          </div>
+        `;
       }
     });
   </script>

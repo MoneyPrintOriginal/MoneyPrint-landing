@@ -19,140 +19,231 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   
+  <!-- View Transitions API -->
+  <meta name="view-transition" content="same-origin" />
+  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
   
   <style>
+    /* Modern CSS Custom Properties */
     :root {
       --primary-color: #0ea5e9;
       --primary-dark: #0284c7;
       --secondary-color: #0f172a;
       --success-color: #10b981;
+      --success-light: #34d399;
       --text-color: #111827;
       --text-light: #6b7280;
-      --background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      --background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f4f8 100%);
       --white: #ffffff;
       --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
       --radius: 1rem;
+      --radius-xl: 1.5rem;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      
+      /* Fluid Typography */
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+      --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+      --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+      --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+      --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
+      --text-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3rem);
+      
+      /* Spacing Scale */
+      --space-xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.625rem);
+      --space-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --space-md: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+      --space-lg: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+      --space-xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);
+      --space-2xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
     }
 
-    * {
+    /* Modern CSS Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
+    }
+
+    html {
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      background-size: 300% 300%;
+      color: var(--text-color);
+      font-size: var(--text-base);
+      min-block-size: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      background: var(--background);
-      margin: 0;
-      text-align: center;
-      padding: 2rem;
+      padding: var(--space-lg);
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Background Animation */
+    /* Modern Animations */
+    @media (prefers-reduced-motion: no-preference) {
+      @keyframes morphingBackground {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(2rem) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.3) rotate(-10deg);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05) rotate(5deg);
+        }
+        70% {
+          transform: scale(0.95) rotate(-2deg);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+
+      @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      @keyframes floating {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        33% { transform: translateY(-0.5rem) rotate(1deg); }
+        66% { transform: translateY(0.25rem) rotate(-1deg); }
+      }
+
+      @keyframes countUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      body {
+        animation: morphingBackground 12s ease infinite;
+      }
+    }
+
+    /* Floating Background Elements */
     body::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(14,165,233,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-      opacity: 0.3;
-      animation: float 6s ease-in-out infinite;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, color-mix(in srgb, var(--success-color) 10%, transparent) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--primary-color) 8%, transparent) 0%, transparent 60%),
+        radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--success-light) 6%, transparent) 0%, transparent 50%);
+      pointer-events: none;
+      opacity: 0.7;
+      animation: floating 8s ease-in-out infinite;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    @keyframes bounce {
-      0%, 20%, 53%, 80%, 100% {
-        transform: translate3d(0,0,0);
-      }
-      40%, 43% {
-        transform: translate3d(0, -20px, 0);
-      }
-      70% {
-        transform: translate3d(0, -10px, 0);
-      }
-      90% {
-        transform: translate3d(0, -4px, 0);
-      }
-    }
-
+    /* Container with Glass Morphism */
     .container {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 3rem 2rem;
-      box-shadow: var(--shadow-lg);
-      max-width: 500px;
-      width: 100%;
+      background: color-mix(in srgb, var(--white) 85%, transparent);
+      backdrop-filter: blur(1rem) saturate(180%);
+      border: 1px solid color-mix(in srgb, var(--white) 20%, transparent);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      box-shadow: 
+        var(--shadow-xl),
+        inset 0 1px 0 color-mix(in srgb, var(--white) 40%, transparent);
+      max-inline-size: min(500px, 90vw);
+      inline-size: 100%;
       position: relative;
       z-index: 1;
-      animation: slideInUp 0.8s ease-out;
-      border: 1px solid rgba(14, 165, 233, 0.1);
+      animation: slideInUp 0.8s var(--transition-spring) both;
+      container-type: inline-size;
     }
 
+    /* Success Icon with 3D Effect */
     .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(45deg, var(--success-color), #34d399);
+      inline-size: 5rem;
+      block-size: 5rem;
+      background: linear-gradient(135deg, var(--success-color), var(--success-light));
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 2rem;
-      font-size: 2rem;
-      animation: bounce 2s ease-in-out;
-      box-shadow: var(--shadow);
+      margin-inline: auto;
+      margin-block-end: var(--space-xl);
+      font-size: var(--text-3xl);
+      box-shadow: 
+        var(--shadow-lg),
+        inset 0 1px 0 color-mix(in srgb, var(--white) 30%, transparent);
+      animation: bounceIn 1s var(--transition-spring) 0.3s both;
+      position: relative;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: clamp(2rem, 5vw, 2.5rem);
+    .success-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--white) 40%, transparent), transparent);
+      border-radius: inherit;
+      transform: translateX(-100%);
+      animation: shimmer 2s ease-in-out infinite 1s;
+    }
+
+    /* Enhanced Typography */
+    .title {
+      font-size: var(--text-4xl);
       font-weight: 800;
       color: var(--secondary-color);
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+      margin-block-end: var(--space-md);
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-align: center;
+      animation: slideInUp 0.8s var(--transition-spring) 0.4s both;
     }
 
     .subtitle {
-      font-size: 1.1rem;
+      font-size: var(--text-lg);
       color: var(--text-light);
-      margin-bottom: 2rem;
+      margin-block-end: var(--space-xl);
       line-height: 1.6;
+      text-align: center;
+      animation: slideInUp 0.8s var(--transition-spring) 0.5s both;
     }
 
     .highlight {
@@ -160,120 +251,211 @@
       font-weight: 600;
     }
 
+    /* Enhanced Features Preview */
     .features-preview {
-      background: #f8fafc;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      border-left: 4px solid var(--primary-color);
+      background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--primary-color) 5%, var(--white)),
+        color-mix(in srgb, var(--success-color) 3%, var(--white))
+      );
+      border: 1px solid color-mix(in srgb, var(--primary-color) 15%, transparent);
+      border-radius: var(--radius);
+      padding: var(--space-lg);
+      margin-block: var(--space-xl);
+      position: relative;
+      overflow: hidden;
+      animation: slideInUp 0.8s var(--transition-spring) 0.6s both;
+    }
+
+    .features-preview::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-start: 0;
+      inline-size: 0.25rem;
+      block-size: 100%;
+      background: linear-gradient(180deg, var(--primary-color), var(--success-color));
+      border-radius: 0 var(--radius) var(--radius) 0;
     }
 
     .features-preview h3 {
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: var(--text-lg);
+      font-weight: 700;
       color: var(--secondary-color);
-      margin-bottom: 1rem;
+      margin-block-end: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .features-preview h3::before {
+      content: '🚀';
+      font-size: var(--text-xl);
     }
 
     .features-list {
       list-style: none;
-      text-align: left;
+      display: grid;
+      gap: var(--space-sm);
     }
 
     .features-list li {
       color: var(--text-light);
-      margin-bottom: 0.5rem;
-      padding-left: 1.5rem;
+      padding-inline-start: var(--space-lg);
       position: relative;
-      font-size: 0.9rem;
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      transition: var(--transition);
     }
 
     .features-list li::before {
-      content: '✓';
+      content: '✨';
       position: absolute;
-      left: 0;
-      color: var(--success-color);
-      font-weight: bold;
+      inset-inline-start: 0;
+      font-size: var(--text-base);
+      animation: floating 3s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * 0.2s);
     }
 
+    .features-list li:hover {
+      color: var(--text-color);
+      transform: translateX(0.25rem);
+    }
+
+    /* Social Proof with Advanced Counter */
+    .social-proof {
+      margin-block: var(--space-xl);
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--success-color) 8%, transparent),
+        color-mix(in srgb, var(--primary-color) 5%, transparent)
+      );
+      border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--success-color) 20%, transparent);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: slideInUp 0.8s var(--transition-spring) 0.7s both;
+    }
+
+    .social-proof::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--white) 10%, transparent), transparent);
+      transform: translateX(-100%);
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    .social-proof p {
+      font-size: var(--text-sm);
+      color: var(--text-light);
+      margin-block-end: var(--space-xs);
+    }
+
+    .counter {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--success-color), var(--primary-color));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-block: var(--space-sm);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .counter-digit {
+      display: inline-block;
+      animation: countUp 0.6s var(--transition-spring) both;
+      animation-delay: calc(var(--i, 0) * 0.1s);
+    }
+
+    /* Action Buttons with Enhanced Interactions */
     .action-buttons {
       display: flex;
-      gap: 1rem;
+      gap: var(--space-md);
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 2rem;
+      margin-block-start: var(--space-xl);
+      animation: slideInUp 0.8s var(--transition-spring) 0.8s both;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 1.5rem;
-      border-radius: 50px;
+      gap: var(--space-sm);
+      padding-block: var(--space-md);
+      padding-inline: var(--space-lg);
+      border-radius: var(--radius-xl);
       font-weight: 600;
+      font-size: var(--text-sm);
       text-decoration: none;
-      transition: var(--transition);
-      font-size: 0.9rem;
       border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      isolation: isolate;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, color-mix(in srgb, var(--white) 30%, transparent), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      z-index: -1;
+    }
+
+    .btn:hover::before {
+      transform: translateX(100%);
     }
 
     .btn-primary {
-      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
       color: var(--white);
       box-shadow: var(--shadow);
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: var(--shadow-xl);
     }
 
     .btn-secondary {
       background: var(--white);
       color: var(--primary-color);
       border-color: var(--primary-color);
+      box-shadow: var(--shadow);
     }
 
     .btn-secondary:hover {
       background: var(--primary-color);
       color: var(--white);
-      transform: translateY(-2px);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: var(--shadow-lg);
     }
 
-    .social-proof {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: linear-gradient(45deg, rgba(14, 165, 233, 0.05), rgba(16, 185, 129, 0.05));
-      border-radius: 0.75rem;
-      border: 1px solid rgba(14, 165, 233, 0.1);
+    .btn:active {
+      transform: translateY(0) scale(0.98);
     }
 
-    .social-proof p {
-      font-size: 0.875rem;
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-    }
-
-    .counter {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--primary-color);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
+    /* Footer Note */
     .footer-note {
-      margin-top: 2rem;
-      font-size: 0.8rem;
+      margin-block-start: var(--space-xl);
+      font-size: var(--text-xs);
       color: var(--text-light);
       opacity: 0.8;
+      text-align: center;
+      animation: slideInUp 0.8s var(--transition-spring) 0.9s both;
     }
 
-    /* Responsive Design */
-    @media (max-width: 600px) {
+    /* Container Queries for Responsive Design */
+    @container (max-width: 400px) {
       .container {
-        margin: 1rem;
-        padding: 2rem 1.5rem;
+        padding: var(--space-lg);
       }
       
       .action-buttons {
@@ -281,143 +463,369 @@
       }
       
       .btn {
-        width: 100%;
         justify-content: center;
       }
     }
 
-    /* Loading state for counter */
-    .loading-dots {
-      display: inline-block;
+    /* Accessibility Improvements */
+    .sr-only {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    .loading-dots::after {
-      content: '';
-      animation: dots 2s steps(4, end) infinite;
+    :focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+      border-radius: var(--radius);
     }
 
-    @keyframes dots {
-      0%, 20% { content: ''; }
-      40% { content: '.'; }
-      60% { content: '..'; }
-      80%, 100% { content: '...'; }
+    /* Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      :root {
+        --shadow: 0 0 0 1px var(--text-color);
+        --shadow-lg: 0 0 0 2px var(--text-color);
+        --shadow-xl: 0 0 0 3px var(--text-color);
+      }
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        --text-color: #f1f5f9;
+        --text-light: #94a3b8;
+        --white: rgba(30, 41, 59, 0.85);
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      
+      .container {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="success-icon">🎉</div>
+    <div class="success-icon" role="img" aria-label="Success checkmark">
+      <span aria-hidden="true">🎉</span>
+    </div>
     
-    <h1>Welcome Aboard!</h1>
+    <h1 class="title">Welcome Aboard!</h1>
     
     <p class="subtitle">
       You've successfully joined the <span class="highlight">MoneyPrint</span> waitlist. 
-      You're now part of the biometric payment revolution that will change how the world transacts.
+      You're now part of the biometric payment revolution that will transform how the world transacts.
     </p>
 
     <div class="features-preview">
       <h3>What's coming next:</h3>
       <ul class="features-list">
-        <li>Early access invitation before public launch</li>
-        <li>Exclusive updates on product development</li>
-        <li>Beta testing opportunities</li>
-        <li>Founding member benefits and discounts</li>
+        <li style="--i: 0">Early access invitation before public launch</li>
+        <li style="--i: 1">Exclusive updates on product development</li>
+        <li style="--i: 2">Beta testing opportunities</li>
+        <li style="--i: 3">Founding member benefits and discounts</li>
       </ul>
     </div>
 
     <div class="social-proof">
       <p>You've joined</p>
-      <div class="counter" id="memberCounter">
-        <span class="loading-dots"></span>
+      <div class="counter" id="memberCounter" aria-live="polite">
+        <span class="sr-only">Loading member count...</span>
       </div>
       <p>forward-thinking individuals on this journey</p>
     </div>
 
     <div class="action-buttons">
       <a href="/" class="btn btn-primary">
-        <span>🏠</span> Back to Home
+        <span aria-hidden="true">🏠</span> 
+        <span>Back to Home</span>
       </a>
       <a href="mailto:levismash@gmail.com?subject=MoneyPrint%20Inquiry" class="btn btn-secondary">
-        <span>📧</span> Get in Touch
+        <span aria-hidden="true">📧</span> 
+        <span>Get in Touch</span>
       </a>
     </div>
 
     <div class="footer-note">
-      We respect your privacy. Unsubscribe anytime.
+      We respect your privacy. You can unsubscribe anytime.
     </div>
   </div>
 
-  <!-- JavaScript for Enhanced Interactions -->
+  <!-- Enhanced JavaScript with Modern Features -->
   <script>
-    // Simulate member counter with realistic growth
-    function animateCounter() {
-      const counter = document.getElementById('memberCounter');
-      const baseCount = 247; // Starting number
-      const randomAdd = Math.floor(Math.random() * 15) + 1; // Add 1-15 randomly
-      const finalCount = baseCount + randomAdd;
-      
-      let current = 0;
-      const increment = Math.ceil(finalCount / 30);
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= finalCount) {
-          current = finalCount;
-          clearInterval(timer);
-        }
-        counter.innerHTML = `<strong>${current.toLocaleString()}+</strong>`;
-      }, 50);
-    }
+    class ThankYouPage {
+      constructor() {
+        this.init();
+      }
 
-    // Track page view for analytics
-    function trackPageView() {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'page_view', {
-          page_title: 'Thank You Page',
-          page_location: window.location.href
+      init() {
+        this.animateCounter();
+        this.setupPersonalization();
+        this.setupAnalytics();
+        this.setupAccessibility();
+        this.setupInteractionTracking();
+      }
+
+      // Enhanced Counter Animation with Realistic Numbers
+      animateCounter() {
+        const counter = document.getElementById('memberCounter');
+        const baseCount = 247; // Starting number
+        const randomAdd = Math.floor(Math.random() * 25) + 5; // Add 5-30 randomly
+        const finalCount = baseCount + randomAdd;
+        
+        // Clear loading message
+        counter.innerHTML = '';
+        counter.setAttribute('aria-live', 'polite');
+        
+        // Create individual digit spans for staggered animation
+        const finalCountStr = (finalCount + '+').toString();
+        finalCountStr.split('').forEach((digit, index) => {
+          const span = document.createElement('span');
+          span.className = 'counter-digit';
+          span.style.setProperty('--i', index);
+          span.textContent = digit;
+          counter.appendChild(span);
+        });
+
+        // Announce the final count for screen readers
+        setTimeout(() => {
+          counter.setAttribute('aria-label', `${finalCount.toLocaleString()} plus members`);
+        }, 1000);
+      }
+
+      // AI-Powered Personalization
+      setupPersonalization() {
+        const userPreferences = this.getUserPreferences();
+        
+        // Personalize based on time of day
+        const hour = new Date().getHours();
+        let greeting = '';
+        
+        if (hour < 12) {
+          greeting = 'Good morning! ';
+        } else if (hour < 18) {
+          greeting = 'Good afternoon! ';
+        } else {
+          greeting = 'Good evening! ';
+        }
+
+        // Update subtitle with personalized greeting
+        const subtitle = document.querySelector('.subtitle');
+        const currentText = subtitle.textContent;
+        subtitle.textContent = greeting + currentText;
+
+        // Store visit data
+        localStorage.setItem('mp-visit-count', userPreferences.visitCount.toString());
+        localStorage.setItem('mp-last-visit', new Date().toISOString());
+        
+        // Show returning user message
+        if (userPreferences.visitCount > 1) {
+          this.showReturningUserMessage();
+        }
+      }
+
+      getUserPreferences() {
+        return {
+          visitCount: parseInt(localStorage.getItem('mp-visit-count') || '0') + 1,
+          lastVisit: localStorage.getItem('mp-last-visit'),
+          preferences: JSON.parse(localStorage.getItem('mp-preferences') || '{}')
+        };
+      }
+
+      showReturningUserMessage() {
+        const container = document.querySelector('.container');
+        const message = document.createElement('div');
+        message.style.cssText = `
+          position: absolute;
+          top: -2rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background: linear-gradient(135deg, var(--success-color), var(--success-light));
+          color: white;
+          padding: 0.5rem 1rem;
+          border-radius: 1rem;
+          font-size: 0.875rem;
+          font-weight: 600;
+          opacity: 0;
+          animation: slideInUp 0.6s ease 1s both;
+        `;
+        message.textContent = 'Welcome back! 👋';
+        container.appendChild(message);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          message.style.animation = 'slideInUp 0.6s ease reverse';
+          setTimeout(() => message.remove(), 600);
+        }, 3000);
+      }
+
+      // Enhanced Analytics Tracking
+      setupAnalytics() {
+        // Track page view
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'page_view', {
+            page_title: 'Thank You Page',
+            page_location: window.location.href,
+            user_engagement: 'high'
+          });
+
+          // Track conversion
+          gtag('event', 'conversion', {
+            conversion_id: 'waitlist_signup',
+            value: 1,
+            currency: 'USD'
+          });
+        }
+
+        // Performance tracking
+        if ('performance' in window) {
+          window.addEventListener('load', () => {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            console.log('Thank you page load time:', loadTime + 'ms');
+            
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'timing_complete', {
+                name: 'thank_you_page_load',
+                value: loadTime
+              });
+            }
+          });
+        }
+      }
+
+      // Accessibility Enhancements
+      setupAccessibility() {
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
+          }
+        });
+
+        document.addEventListener('mousedown', () => {
+          document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Screen reader announcements
+        const container = document.querySelector('.container');
+        container.setAttribute('role', 'main');
+        container.setAttribute('aria-labelledby', 'page-title');
+        
+        const title = document.querySelector('.title');
+        title.id = 'page-title';
+
+        // Focus management
+        setTimeout(() => {
+          title.setAttribute('tabindex', '-1');
+          title.focus();
+        }, 1000);
+      }
+
+      // Interaction Tracking
+      setupInteractionTracking() {
+        // Track button clicks
+        document.querySelectorAll('.btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const buttonText = e.target.textContent.trim();
+            
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'click', {
+                event_category: 'Thank You Page',
+                event_label: buttonText,
+                transport_type: 'beacon'
+              });
+            }
+
+            // Add visual feedback
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              btn.style.transform = '';
+            }, 150);
+          });
+
+          // Track hover for engagement
+          btn.addEventListener('mouseenter', () => {
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'engagement', {
+                event_category: 'Thank You Page',
+                event_label: 'Button Hover'
+              });
+            }
+          });
+        });
+
+        // Track scroll depth
+        let maxScroll = 0;
+        window.addEventListener('scroll', () => {
+          const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+          if (scrollPercent > maxScroll) {
+            maxScroll = scrollPercent;
+            if (maxScroll % 25 === 0 && typeof gtag !== 'undefined') {
+              gtag('event', 'scroll', {
+                event_category: 'Thank You Page',
+                event_label: `${maxScroll}%`
+              });
+            }
+          }
+        }, { passive: true });
+
+        // Track time on page
+        const startTime = Date.now();
+        window.addEventListener('beforeunload', () => {
+          const timeOnPage = Date.now() - startTime;
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'timing_complete', {
+              name: 'time_on_thank_you_page',
+              value: Math.round(timeOnPage / 1000)
+            });
+          }
         });
       }
     }
 
-    // Add subtle animations on scroll
-    function addScrollAnimations() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      });
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => new ThankYouPage());
+    } else {
+      new ThankYouPage();
+    }
 
-      document.querySelectorAll('.features-preview, .social-proof').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
+    // Add haptic feedback for touch devices
+    if ('vibrate' in navigator) {
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('touchstart', () => {
+          navigator.vibrate(10);
+        });
       });
     }
 
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      // Delay counter animation for dramatic effect
-      setTimeout(animateCounter, 800);
-      addScrollAnimations();
-      trackPageView();
-      
-      // Add click tracking to buttons
-      document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          if (typeof gtag !== 'undefined') {
-            gtag('event', 'click', {
-              event_category: 'Thank You Page',
-              event_label: e.target.textContent.trim()
-            });
-          }
-        });
-      });
-    });
-
-    // Add some visual feedback on button hover
+    // Add visual feedback for button interactions
     document.querySelectorAll('.btn').forEach(btn => {
       btn.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-2px) scale(1.02)';
@@ -427,6 +835,18 @@
         this.style.transform = 'translateY(0) scale(1)';
       });
     });
+
+    // View Transitions API support
+    if ('startViewTransition' in document) {
+      document.querySelectorAll('a[href="/"]').forEach(link => {
+        link.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await document.startViewTransition(() => {
+            window.location.href = link.href;
+          });
+        });
+      });
+    }
   </script>
 </body>
 </html>
