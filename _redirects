@@ -1,1 +1,9 @@
-/thank-you.html  /thank-you.html  200
+# Netlify redirects file
+
+# Redirect common variations to canonical URLs
+/thankyou /thank-you.html 301
+/thanks /thank-you.html 301
+/success /thank-you.html 301
+
+# Handle 404s gracefully by redirecting to home
+/* / 404

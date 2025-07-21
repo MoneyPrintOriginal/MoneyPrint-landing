@@ -1,0 +1,25 @@
+{
+  "name": "MoneyPrint - Biometric Payment Revolution",
+  "short_name": "MoneyPrint",
+  "description": "Revolutionizing payments using just your fingerprint. No cards. No phones. Just you.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "lang": "en-US",
+  "scope": "/"
+}

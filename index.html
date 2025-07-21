@@ -3,108 +3,568 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoneyPrint - Instant Fingerprint Payments</title>
+  <title>MoneyPrint - Instant Fingerprint Payments | Biometric Payment Revolution</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="MoneyPrint revolutionizes payments with biometric technology. Pay anywhere using just your fingerprint - no cards, no phones, just you. Join the future of secure payments." />
+  <meta name="keywords" content="biometric payments, fingerprint payments, fintech, secure payments, contactless payments, digital wallet, financial technology" />
+  <meta name="author" content="Levis Machira" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph Tags for Social Sharing -->
+  <meta property="og:title" content="MoneyPrint - Instant Fingerprint Payments" />
+  <meta property="og:description" content="Revolutionizing payments using just your fingerprint. No cards. No phones. Just you." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://moneyprint.netlify.app/" />
+  <meta property="og:image" content="https://moneyprint.netlify.app/og-image.jpg" />
+  
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MoneyPrint - Instant Fingerprint Payments" />
+  <meta name="twitter:description" content="Revolutionizing payments using just your fingerprint. No cards. No phones. Just you." />
+  <meta name="twitter:image" content="https://moneyprint.netlify.app/og-image.jpg" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  
+  <!-- Fonts with Performance Optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MoneyPrint",
+    "description": "Revolutionizing payments using biometric fingerprint technology",
+    "url": "https://moneyprint.netlify.app/",
+    "founder": {
+      "@type": "Person",
+      "name": "Levis Machira",
+      "email": "levismash@gmail.com"
+    },
+    "sameAs": [
+      "https://github.com/MoneyPrintOriginal/MoneyPrint-landing"
+    ]
+  }
+  </script>
+  
+  <!-- Google Analytics (replace with your tracking ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_TRACKING_ID');
+  </script>
+  
   <style>
+    :root {
+      --primary-color: #0ea5e9;
+      --primary-dark: #0284c7;
+      --secondary-color: #0f172a;
+      --text-color: #111827;
+      --text-light: #6b7280;
+      --background: #f9fafb;
+      --white: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --radius: 0.75rem;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Inter', sans-serif;
     }
+    
     body {
       line-height: 1.6;
-      color: #111;
-      background: #f9fafb;
+      color: var(--text-color);
+      background: var(--background);
+      overflow-x: hidden;
     }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .animate-fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Header Styles */
     header {
-      background-color: #0f172a;
-      color: #fff;
-      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #1e293b 100%);
+      color: var(--white);
+      padding: 4rem 1.5rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.1;
+    }
+    
+    header > * {
+      position: relative;
+      z-index: 1;
+    }
+    
     header h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #60a5fa, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+    
     header p {
-      font-size: 1.1rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
       max-width: 600px;
-      margin: 0 auto;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
     }
+    
+    .hero-cta {
+      margin-top: 2rem;
+    }
+    
+    .hero-cta .btn {
+      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+      color: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+      border: 2px solid transparent;
+    }
+    
+    .hero-cta .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    /* Section Styles */
     section {
-      padding: 3rem 1.5rem;
-      max-width: 900px;
+      padding: 5rem 1.5rem;
+      max-width: 1200px;
       margin: 0 auto;
     }
+    
+    section h2 {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--secondary-color);
+    }
+    
+    /* Features Grid */
     .features {
       display: grid;
       gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 3rem;
     }
+    
     .feature {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      background: var(--white);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .feature::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      transform: translateX(-100%);
+      transition: var(--transition);
+    }
+    
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .feature:hover::before {
+      transform: translateX(0);
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .feature h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    .feature p {
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    
+    /* Demo Section */
+    #demo {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 2rem auto;
+    }
+    
+    #demo h2 {
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+    
+    #demo p {
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .demo-container {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    
     iframe {
       width: 100%;
       height: 600px;
       border: none;
-      border-radius: 1rem;
+      display: block;
     }
+    
+    .demo-overlay {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    /* CTA Section */
     .cta {
       text-align: center;
-      margin-top: 3rem;
+      margin-top: 4rem;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      border-radius: var(--radius);
+      color: var(--white);
     }
-    .cta a {
-      background-color: #0ea5e9;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
+    
+    .cta h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta p {
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .cta .btn {
+      background: var(--white);
+      color: var(--primary-color);
+      padding: 1rem 2rem;
+      border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
+      display: inline-block;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    
+    .cta .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--secondary-color);
+      color: var(--white);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      margin-top: 4rem;
+    }
+    
+    footer p {
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .footer-links a {
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary-color);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        padding: 3rem 1rem;
+      }
+      
+      section {
+        padding: 3rem 1rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      iframe {
+        height: 400px;
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+    
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Scroll Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+      z-index: 1000;
+      transition: width 0.1s ease;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>MoneyPrint</h1>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+  
+  <header class="animate-fade-in">
+    <h1 class="animate-float">MoneyPrint</h1>
     <p>Revolutionizing payments using just your fingerprint. No cards. No phones. Just you.</p>
+    <div class="hero-cta">
+      <a href="#demo" class="btn">Try Live Demo</a>
+    </div>
   </header>
 
-  <section>
+  <section class="animate-fade-in">
     <h2>Why MoneyPrint?</h2>
     <div class="features">
       <div class="feature">
+        <div class="feature-icon">🔐</div>
         <h3>Biometric Security</h3>
-        <p>Your fingerprint is your identity — no passwords or pins to remember.</p>
+        <p>Your fingerprint is your identity — no passwords or pins to remember. Advanced biometric encryption ensures maximum security.</p>
       </div>
       <div class="feature">
+        <div class="feature-icon">🌍</div>
         <h3>Universal Access</h3>
-        <p>Anyone can pay, anywhere — with just their finger.</p>
+        <p>Anyone can pay, anywhere — with just their finger. Break down payment barriers and access global markets instantly.</p>
       </div>
       <div class="feature">
+        <div class="feature-icon">⚡</div>
         <h3>Instant Transactions</h3>
-        <p>Money moves instantly. No need to open apps or confirm SMS codes.</p>
+        <p>Money moves instantly. No need to open apps or confirm SMS codes. Experience lightning-fast payment processing.</p>
       </div>
       <div class="feature">
+        <div class="feature-icon">🛡️</div>
         <h3>Eliminates Fraud</h3>
-        <p>Fingerprint authentication drastically reduces identity theft, chargebacks, and unauthorized access.</p>
+        <p>Fingerprint authentication drastically reduces identity theft, chargebacks, and unauthorized access. Your biometrics can't be stolen.</p>
       </div>
     </div>
+  </section>
 
+  <section id="demo" class="animate-fade-in">
+    <h2>Live Demo</h2>
+    <p>Below is a preview of how a fingerprint payment flow could work. Experience the future of payments today.</p>
+    <div class="demo-container">
+      <iframe 
+        src="https://preview--finger-pay-now.lovable.app/" 
+        title="MoneyPrint Payment Demo"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+        loading="lazy">
+      </iframe>
+      <div class="demo-overlay">Live Demo</div>
+    </div>
+    
     <div class="cta">
-      <a href="#demo">Try Live Demo</a>
+      <h3>Ready to Join the Revolution?</h3>
+      <p>Be among the first to experience the future of payments. Join our waitlist and get early access.</p>
+      <a href="/thank-you.html" class="btn" onclick="gtag('event', 'click', {'event_category': 'CTA', 'event_label': 'Join Waitlist'})">Join Waitlist</a>
     </div>
   </section>
 
-  <section id="demo">
-    <h2>Live Demo</h2>
-    <p>Below is a preview of how a fingerprint payment flow could work.</p>
-    <iframe src="https://preview--finger-pay-now.lovable.app/"></iframe>
-  </section>
+  <footer>
+    <p>&copy; 2024 MoneyPrint. Built with ❤️ by Levis Machira in Nairobi, Kenya.</p>
+    <div class="footer-links">
+      <a href="mailto:levismash@gmail.com">Contact</a>
+      <a href="https://github.com/MoneyPrintOriginal/MoneyPrint-landing" target="_blank" rel="noopener">GitHub</a>
+      <a href="#demo">Demo</a>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Interactions -->
+  <script>
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollProgress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = scrollProgress + '%';
+    });
+
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all feature cards
+    document.querySelectorAll('.feature').forEach((el, index) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+      observer.observe(el);
+    });
+
+    // Error handling for iframe
+    const iframe = document.querySelector('iframe');
+    iframe.addEventListener('error', () => {
+      const demoContainer = document.querySelector('.demo-container');
+      demoContainer.innerHTML = `
+        <div style="padding: 3rem; text-align: center; background: #f8f9fa; border-radius: 0.75rem;">
+          <h3 style="color: #6b7280; margin-bottom: 1rem;">Demo temporarily unavailable</h3>
+          <p style="color: #9ca3af;">Please check back later to experience our live demo.</p>
+        </div>
+      `;
+    });
+
+    // Performance monitoring
+    window.addEventListener('load', () => {
+      if ('performance' in window) {
+        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        console.log('Page load time:', loadTime + 'ms');
+      }
+    });
+  </script>
 </body>
 </html>
